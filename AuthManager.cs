@@ -16,8 +16,8 @@ public class AuthManager : MonoBehaviour
 
     [Header("Universal Pop-ups")]
     public GameObject successPopUp;
-    public GameObject errorPopUp;          // NEW: Just ONE error panel for everything!
-    public TextMeshProUGUI errorPopUpText; // NEW: The text box INSIDE that error panel
+    public GameObject errorPopUp;         
+    public TextMeshProUGUI errorPopUpText; 
 
     [Header("Screen Routing")]
     public GameObject loginPanel;       
@@ -53,7 +53,6 @@ public class AuthManager : MonoBehaviour
             successPopUp.SetActive(true);
         }
 
-        // Clear fields
         registerUsernameInput.text = "";
         registerPasswordInput.text = "";
         childNameInput.text = "";
