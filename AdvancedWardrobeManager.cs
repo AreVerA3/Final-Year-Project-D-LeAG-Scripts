@@ -244,9 +244,8 @@ public class AdvancedWardrobeManager : MonoBehaviour
         if (slimeStatsText != null)
         {
             string slimeName = PlayerPrefs.GetString("SlimeName", "Rimuru"); 
-            int spellingLevel = PlayerPrefs.GetInt("HighestSpellingLevel", 1);
-            int readingLevel = PlayerPrefs.GetInt("HighestReadingLevel", 1);
-
+            int spellingLevel = PlayerPrefs.GetInt("SpellingLevelReached", 1);
+            int readingLevel = PlayerPrefs.GetInt("ReadingLevelReached", 1);
             slimeStatsText.text = $"Slime Name: {slimeName}\nSpelling Level: {spellingLevel}\nReading Level: {readingLevel}";
         }
     }

@@ -22,17 +22,17 @@ public class ProfileDisplay : MonoBehaviour
     public TextMeshProUGUI SpellingPercentageText; 
     public TextMeshProUGUI ReadingPercentageText;  
 
-    [Header("Highest Level Text Displays")] // <-- NEW: Added slots for the level counters!
-    public TextMeshProUGUI SpellingHighestLevelText; // Drag your Spelling "Highest Level: X" text here
-    public TextMeshProUGUI ReadingHighestLevelText;  // Drag your Reading "Highest Level: X" text here
+    [Header("Highest Level Text Displays")] 
+    public TextMeshProUGUI SpellingLevelText; 
+    public TextMeshProUGUI ReadingLevelText;  
 
     [Header("Configuration")]
-    public int totalLevelsInGame = 20; // Matches your 20 levels map layout
+    public int totalLevelsInGame = 20; 
 
     void Start()
     {
-        childNameText.text = PlayerPrefs.GetString("ChildName", "Unknown");
-        childAgeText.text = "Age: " + PlayerPrefs.GetString("ChildAge", "?");
+        childNameText.text = PlayerPrefs.GetString("SavedChildName", "Unknown");
+        childAgeText.text = "Age: " + PlayerPrefs.GetString("SavedChildAge", "?");
         RefreshProfileUI(); 
     }
 
@@ -42,7 +42,6 @@ public class ProfileDisplay : MonoBehaviour
         RefreshProfileUI();
     }
 
-    // This allows buttons to manually force a UI update
     public void ManualTriggerRefresh()
     {
         Debug.Log("[PROFILE SYSTEM] Manual Trigger Refresh called via button click!");
@@ -55,18 +54,16 @@ public class ProfileDisplay : MonoBehaviour
         string retrievedName = PlayerPrefs.GetString("SavedChildName", "No Name Saved");
         string retrievedAge = PlayerPrefs.GetString("SavedChildAge", "0");
 
-        // (Name and age text layout loop remains here...)
-
         // 2. THE MEMORY LINK: Tapping directly into what the map managers save!
-        int spellingLevelReached = PlayerPrefs.GetInt("SpellingLevelReached", 1);
-        int readingLevelReached = PlayerPrefs.GetInt("ReadingLevelReached", 1);
+        // Matching your screenshot exactly!
+        int spellingLevel = PlayerPrefs.GetInt("SpellingLevelReached", 1);
+        int readingLevel = PlayerPrefs.GetInt("ReadingLevelReached", 1);
 
         // 3. Calculate completed levels based on that memory
-        // If they are on Level 4, they have fully completed 3 levels!
-        int spellingCompleted = spellingLevelReached - 1;
-        int readingCompleted = readingLevelReached - 1;
+        int spellingCompleted = spellingLevel - 1;
+        int readingCompleted = readingLevel - 1;
 
-        // Clamp values safely between 0 and 20
+        // Clamp values safely between 0 and totalLevelsInGame
         spellingCompleted = Mathf.Clamp(spellingCompleted, 0, totalLevelsInGame);
         readingCompleted = Mathf.Clamp(readingCompleted, 0, totalLevelsInGame);
 
@@ -93,15 +90,17 @@ public class ProfileDisplay : MonoBehaviour
             ReadingPercentageText.text = Mathf.RoundToInt(readingPercent) + "%";
         }
 
-        // 6. Link it directly to the text displays!
-        if (SpellingHighestLevelText != null)
+        // 6. Link it directly to the text displays! (TYPO FIXED HERE)
+        if (SpellingLevelText != null)
         {
-            SpellingHighestLevelText.text = "Highest Level: " + spellingLevelReached;
+            SpellingLevelText.text = "Highest Level: " + spellingLevel;
         }
-        if (ReadingHighestLevelText != null)
+        if (ReadingLevelText != null)
         {
-            ReadingHighestLevelText.text = "Highest Level: " + readingLevelReached;
+            ReadingLevelText.text = "Highest Level: " + readingLevel;
         }
+
+        Debug.Log($"[PROFILE TEST] Unity thinks the spelling level is: {spellingLevel} and reading level is: {readingLevel}");
     }
 
     public void ClickBackButton()
