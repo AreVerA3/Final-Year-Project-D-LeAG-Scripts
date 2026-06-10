@@ -12,10 +12,10 @@ public class ReadingMapManager : MonoBehaviour
     void Start()
     {
         // 1. Tell the system we are explicitly tracking reading progress
-        int levelReached = PlayerPrefs.GetInt("ReadingLevelReached", 1);
+        int readingLevel = PlayerPrefs.GetInt("ReadingLevelReached", 1);
 
         // 2. Handle Panel Swapping (Level 11+ logic)
-        if (levelReached >= 11 && panelLevel2 != null)
+        if (readingLevel >= 11 && panelLevel2 != null)
         {
             panelLevel1.SetActive(false);
             panelLevel2.SetActive(true);
@@ -32,7 +32,7 @@ public class ReadingMapManager : MonoBehaviour
             if (readingButtons[i] != null)
             {
                 // Lock or unlock based on progress
-                readingButtons[i].interactable = (i + 1 <= levelReached);
+                readingButtons[i].interactable = (i + 1 <= readingLevel);
 
                 // Find the MapLevelButton script sitting on the button prefab
                 MapLevelButton levelButtonScript = readingButtons[i].GetComponent<MapLevelButton>();
@@ -50,7 +50,7 @@ public class ReadingMapManager : MonoBehaviour
         }
 
         // 4. Position the little slime avatar on the map path
-        int currentSlot = levelReached - 1;
+        int currentSlot = readingLevel - 1;
         if (currentSlot >= 0 && currentSlot < readingButtons.Length && readingButtons[currentSlot] != null)
         {
             slimeIcon.position = readingButtons[currentSlot].transform.position;

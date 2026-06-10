@@ -25,6 +25,10 @@ public class AdvancedWardrobeManager : MonoBehaviour
     [Header("Slime Stats Display")]
     public TextMeshProUGUI slimeStatsText; 
 
+    [Header("Edit Name Panel")]
+    public GameObject editNamePanel;         
+    public TMP_InputField newSlimeNameInput;  
+
     [Header("Shop UI Elements")]
     public GameObject lockIcon;              
     public TextMeshProUGUI categoryText;     
@@ -56,7 +60,70 @@ public class AdvancedWardrobeManager : MonoBehaviour
         UpdateStatsDisplay(); 
         LoadEquippedOutfit();
         CloseShop(); 
-        if (failBuyPanel != null) failBuyPanel.SetActive(false); // Hide pop-up when game starts
+        
+        // Hide both extra panels when the scene starts up cleanly
+        if (failBuyPanel != null) failBuyPanel.SetActive(false); 
+        if (editNamePanel != null) editNamePanel.SetActive(false);
+    }
+
+    public void OpenEditNamePanel()
+    {
+        if (editNamePanel != null)
+        {
+            editNamePanel.SetActive(true);
+            
+            // Pre-fill input field with current name so it's not empty
+            if (newSlimeNameInput != null)
+            {
+                newSlimeNameInput.text = PlayerPrefs.GetString("SlimeName", "Rimuru");
+            }
+        }
+    }
+
+    public void SaveNewSlimeName()
+    {
+        if (newSlimeNameInput == null || editNamePanel == null)
+        {
+            Debug.LogError("Hey! You forgot to drag the Edit Panel or Input Field into the Inspector slots!");
+            return;
+        }
+
+        string newName = newSlimeNameInput.text.Trim();
+
+        if (!string.IsNullOrWhiteSpace(newName))
+        {
+            // 1. Save permanently
+            PlayerPrefs.SetString("SlimeName", newName);
+            PlayerPrefs.Save();
+
+            // 2. Refresh the stats block text card
+            UpdateStatsDisplay();
+
+            // 3. Close the popup edit panel
+            editNamePanel.SetActive(false);
+            
+            // 4. BRING BACK THE MAIN WARDROBE INTERFACE!
+            if (mainDisplayPanel != null)
+            {
+                mainDisplayPanel.SetActive(true);
+            }
+            
+            Debug.Log("Slime name successfully updated to: " + newName);
+        }
+    }
+    
+    public void CloseEditNamePanel()
+    {
+        if (editNamePanel != null)
+        {
+            editNamePanel.SetActive(false);
+        }
+
+        // BRING BACK THE MAIN WARDROBE INTERFACE IF THEY CANCEL!
+        if (mainDisplayPanel != null)
+        {
+            mainDisplayPanel.SetActive(true);
+        }
     }
 
     public void OpenShop()
@@ -171,14 +238,17 @@ public class AdvancedWardrobeManager : MonoBehaviour
             PlayerPrefs.SetInt("TotalCoins", totalCoins);
             PlayerPrefs.SetInt("Owned_" + item.itemID, 1); 
             PlayerPrefs.Save();
-            
+            ButtonSoundPlayer.PlaySoundFive();
+
             UpdateCoinDisplay();
             RefreshShopUI(); 
         }
         else
         {
             Debug.Log("Not enough coins!");
-            if (failBuyPanel != null) failBuyPanel.SetActive(true); // Pop up the warning!
+            PanelSoundPlayer.PlayFailSound();
+
+            if (failBuyPanel != null) failBuyPanel.SetActive(true); 
         }
     }
 
@@ -186,6 +256,8 @@ public class AdvancedWardrobeManager : MonoBehaviour
     {
         PlayerPrefs.SetString(prefKey, itemID);
         PlayerPrefs.Save();
+        ButtonSoundPlayer.PlaySoundSix();
+
         RefreshShopUI();
     }
 
@@ -193,6 +265,8 @@ public class AdvancedWardrobeManager : MonoBehaviour
     {
         PlayerPrefs.SetString(prefKey, ""); 
         PlayerPrefs.Save();
+        ButtonSoundPlayer.PlaySoundSix();
+
         RefreshShopUI();
     }
 
@@ -255,7 +329,6 @@ public class AdvancedWardrobeManager : MonoBehaviour
         SceneManager.LoadScene(sceneToLoadOnBack);
     }
 
-    // NEW: Function to close the fail panel!
     public void CloseFailBuyPanel()
     {
         if (failBuyPanel != null) failBuyPanel.SetActive(false);

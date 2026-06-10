@@ -5,55 +5,88 @@ using UnityEngine.SceneManagement;
 public class AuthManager : MonoBehaviour
 {
     [Header("Registration UI")]
-    public TMP_InputField registerUsernameInput;
+    public TMP_InputField registerParentNameInput; 
     public TMP_InputField registerPasswordInput;
     public TMP_InputField childNameInput; 
     public TMP_InputField childAgeInput;  
 
     [Header("Login UI")]
-    public TMP_InputField loginUsernameInput;
+    public TMP_InputField loginParentNameInput;    
     public TMP_InputField loginPasswordInput;
 
     [Header("Universal Pop-ups")]
     public GameObject successPopUp;
-    public GameObject errorPopUp;         
+    public GameObject errorPopUp;          
     public TextMeshProUGUI errorPopUpText; 
 
-    [Header("Screen Routing")]
+    [Header("Screen Routing Panels")]
     public GameObject loginPanel;       
     public GameObject q1Panel;          
     public string dashboardSceneName;   
 
+    public void ShowRegisterPanel()
+    {
+        if (loginPanel != null && q1Panel != null)
+        {
+            loginPanel.SetActive(false); 
+            q1Panel.SetActive(true);     
+        }
+    }
+
+    public void ShowLoginPanel()
+    {
+        if (loginPanel != null && q1Panel != null)
+        {
+            q1Panel.SetActive(false);    
+            loginPanel.SetActive(true);  
+        }
+    }
+
     public void RegisterUser()
     {
-        string username = registerUsernameInput.text;
-        string password = registerPasswordInput.text;
+        if (registerParentNameInput == null) return;
 
-        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+        string username = registerParentNameInput.text.Trim();
+        string password = registerPasswordInput.text.Trim();
+        string childName = childNameInput.text.Trim();
+        string childAge = childAgeInput.text.Trim();
+
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            // 1. Tell the pop-up what to say, then turn it on!
             if (errorPopUp != null && errorPopUpText != null)
             {
-                errorPopUpText.text = "Username and password cannot be empty!";
+                errorPopUpText.text = "Parent's name and password cannot be empty!";
                 errorPopUp.SetActive(true);
             }
             return;
         }
 
-        // Save data
-        PlayerPrefs.SetString("SavedUsername", username);
-        PlayerPrefs.SetString("SavedPassword", password);
-        PlayerPrefs.SetString("SavedChildName", childNameInput.text);
-        PlayerPrefs.SetString("SavedChildAge", childAgeInput.text);
-        PlayerPrefs.SetInt("FirstTimeUser", 1); 
-        PlayerPrefs.Save(); 
-
-        if (successPopUp != null)
+        if (PlayerPrefs.HasKey("Password_" + username))
         {
-            successPopUp.SetActive(true);
+            if (errorPopUp != null && errorPopUpText != null)
+            {
+                errorPopUpText.text = "This Parent Name is already registered! Please log in instead.";
+                errorPopUp.SetActive(true);
+            }
+            return;
         }
 
-        registerUsernameInput.text = "";
+        PlayerPrefs.SetString("Password_" + username, password);
+        PlayerPrefs.SetString("ChildName_" + username, childName);
+        PlayerPrefs.SetString("ChildAge_" + username, childAge);
+        
+        PlayerPrefs.SetInt(username + "_TotalCoins", 50); 
+        PlayerPrefs.SetString(username + "_SlimeName", string.IsNullOrWhiteSpace(childName) ? "Rimuru" : childName);
+        PlayerPrefs.SetInt(username + "_SpellingLevelReached", 1);
+        PlayerPrefs.SetInt(username + "_ReadingLevelReached", 1);
+
+        PlayerPrefs.SetString("CurrentActiveUser", username);
+        PlayerPrefs.SetInt("IsLoggedIn", 1); 
+        PlayerPrefs.Save(); 
+
+        if (successPopUp != null) successPopUp.SetActive(true);
+        
+        registerParentNameInput.text = "";
         registerPasswordInput.text = "";
         childNameInput.text = "";
         childAgeInput.text = "";
@@ -61,38 +94,25 @@ public class AuthManager : MonoBehaviour
 
     public void LoginUser()
     {
-        string inputUsername = loginUsernameInput.text;
-        string inputPassword = loginPasswordInput.text;
+        string inputParentName = loginParentNameInput.text.Trim();
+        string inputPassword = loginPasswordInput.text.Trim();
+        string savedPassword = PlayerPrefs.GetString("Password_" + inputParentName, "");
 
-        string savedUsername = PlayerPrefs.GetString("SavedUsername", "");
-        string savedPassword = PlayerPrefs.GetString("SavedPassword", "");
-
-        if (inputUsername == savedUsername && inputPassword == savedPassword && !string.IsNullOrEmpty(savedUsername))
+        if (inputPassword == savedPassword && !string.IsNullOrEmpty(savedPassword))
         {
-            int isFirstTime = PlayerPrefs.GetInt("FirstTimeUser", 1); 
+            PlayerPrefs.SetString("CurrentActiveUser", inputParentName);
+            PlayerPrefs.SetInt("IsLoggedIn", 1); 
+            PlayerPrefs.Save();
 
-            if (isFirstTime == 1)
-            {
-                PlayerPrefs.SetInt("FirstTimeUser", 0);
-                PlayerPrefs.Save();
-
-                if (loginPanel != null) loginPanel.SetActive(false);
-                if (q1Panel != null) q1Panel.SetActive(true);
-            }
-            else
-            {
-                SceneManager.LoadScene(dashboardSceneName);
-            }
+            SceneManager.LoadScene(dashboardSceneName);
         }
         else
         {
-            // 2. Tell the SAME pop-up to say something else, then turn it on!
             if (errorPopUp != null && errorPopUpText != null)
             {
-                errorPopUpText.text = "Invalid username or password.";
+                errorPopUpText.text = "Invalid Parent's Name or password.";
                 errorPopUp.SetActive(true);
             }
-
             loginPasswordInput.text = ""; 
         }
     }
@@ -102,9 +122,13 @@ public class AuthManager : MonoBehaviour
         if (successPopUp != null) successPopUp.SetActive(false);
     }
 
-    // Hook this up to the X button on your shared Error Pop-up
     public void CloseErrorPopUp()
     {
         if (errorPopUp != null) errorPopUp.SetActive(false);
+    }
+
+    public void FinishQ1AndEnterGame()
+    {
+        SceneManager.LoadScene(dashboardSceneName);
     }
 }

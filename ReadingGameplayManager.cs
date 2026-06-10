@@ -151,8 +151,11 @@ public class ReadingGameplayManager : MonoBehaviour
 
                 int currentCoins = PlayerPrefs.GetInt("TotalCoins", 0);
                 PlayerPrefs.SetInt("TotalCoins", currentCoins + 5);
-                PlayerPrefs.Save();
                 
+                // NEW: Secretly track a flawless correct reading!
+                PlayerPrefs.SetInt("TotalReadingCorrect", PlayerPrefs.GetInt("TotalReadingCorrect", 0) + 1);
+                
+                PlayerPrefs.Save();
                 UpdateCoinDisplay();
             }
 
@@ -162,6 +165,10 @@ public class ReadingGameplayManager : MonoBehaviour
         } 
         else 
         { 
+            // NEW: Secretly track a reading mistake!
+            PlayerPrefs.SetInt("TotalReadingMistakes", PlayerPrefs.GetInt("TotalReadingMistakes", 0) + 1);
+            PlayerPrefs.Save();
+            
             hasMistakeOnCurrentWord = true; 
             wrongPanel.SetActive(true); 
         }

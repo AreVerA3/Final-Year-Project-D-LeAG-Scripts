@@ -157,9 +157,12 @@ public class SpellingManager : MonoBehaviour
             {
                 score++;
                 sessionCoinsEarned += 5; 
-                // Keep saving to lifetime total in background so player doesn't lose them!
                 int currentCoins = PlayerPrefs.GetInt("TotalCoins", 0);
                 PlayerPrefs.SetInt("TotalCoins", currentCoins + 5);
+                
+                // NEW: Secretly track a flawless correct answer!
+                PlayerPrefs.SetInt("TotalSpellingCorrect", PlayerPrefs.GetInt("TotalSpellingCorrect", 0) + 1);
+                
                 PlayerPrefs.Save();
                 UpdateCoinDisplay();
             }
@@ -170,6 +173,10 @@ public class SpellingManager : MonoBehaviour
         }
         else
         {
+            // NEW: Secretly track a mistake!
+            PlayerPrefs.SetInt("TotalSpellingMistakes", PlayerPrefs.GetInt("TotalSpellingMistakes", 0) + 1);
+            PlayerPrefs.Save();
+            
             hasMistakeOnCurrentWord = true; 
             wrongPanel.SetActive(true);
         }

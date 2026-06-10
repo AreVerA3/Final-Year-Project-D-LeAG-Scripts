@@ -12,10 +12,10 @@ public class SpellingMapManager : MonoBehaviour
     void Start()
     {
         // 1. Tell the system we are explicitly tracking spelling progress
-        int levelReached = PlayerPrefs.GetInt("SpellingLevelReached", 1);
+        int spellingLevel = PlayerPrefs.GetInt("SpellingLevelReached", 1);
 
         // 2. Handle Panel Swapping (Level 11+ logic)
-        if (levelReached >= 11 && panelLevel2 != null)
+        if (spellingLevel >= 11 && panelLevel2 != null)
         {
             panelLevel1.SetActive(false);
             panelLevel2.SetActive(true);
@@ -32,7 +32,7 @@ public class SpellingMapManager : MonoBehaviour
             if (spellingButtons[i] != null)
             {
                 // Lock or unlock based on progress
-                spellingButtons[i].interactable = (i + 1 <= levelReached);
+                spellingButtons[i].interactable = (i + 1 <= spellingLevel);
 
                 // Find the MapLevelButton script sitting on the button prefab
                 MapLevelButton levelButtonScript = spellingButtons[i].GetComponent<MapLevelButton>();
@@ -50,7 +50,7 @@ public class SpellingMapManager : MonoBehaviour
         }
 
         // 4. Position the little slime avatar on the map path
-        int currentSlot = levelReached - 1;
+        int currentSlot = spellingLevel - 1;
         if (currentSlot >= 0 && currentSlot < spellingButtons.Length && spellingButtons[currentSlot] != null)
         {
             slimeIcon.position = spellingButtons[currentSlot].transform.position;

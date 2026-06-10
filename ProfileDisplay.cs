@@ -8,8 +8,6 @@ public class ProfileDisplay : MonoBehaviour
     [Header("Profile Text Displays")]
     public TextMeshProUGUI[] childNameDisplayTexts; 
     public TextMeshProUGUI childAgeDisplayText;
-    public TextMeshProUGUI childNameText;
-    public TextMeshProUGUI childAgeText;
 
     [Header("Navigation")]
     public string sceneToLoadOnBack = "MapScene"; 
@@ -31,8 +29,6 @@ public class ProfileDisplay : MonoBehaviour
 
     void Start()
     {
-        childNameText.text = PlayerPrefs.GetString("SavedChildName", "Unknown");
-        childAgeText.text = "Age: " + PlayerPrefs.GetString("SavedChildAge", "?");
         RefreshProfileUI(); 
     }
 
@@ -44,63 +40,63 @@ public class ProfileDisplay : MonoBehaviour
 
     public void ManualTriggerRefresh()
     {
-        Debug.Log("[PROFILE SYSTEM] Manual Trigger Refresh called via button click!");
         RefreshProfileUI();
     }
 
-    public void RefreshProfileUI()
+   public void RefreshProfileUI()
     {
         // 1. Retrieve child strings from memory
-        string retrievedName = PlayerPrefs.GetString("SavedChildName", "No Name Saved");
-        string retrievedAge = PlayerPrefs.GetString("SavedChildAge", "0");
+        string retrievedName = PlayerPrefs.GetString("SavedChildName", "Unknown");
+        string retrievedAge = PlayerPrefs.GetString("SavedChildAge", "?");
 
-        // 2. THE MEMORY LINK: Tapping directly into what the map managers save!
-        // Matching your screenshot exactly!
+        foreach (TextMeshProUGUI nameBox in childNameDisplayTexts)
+        {
+            if (nameBox != null) nameBox.text = retrievedName;
+        }
+
+        if (childAgeDisplayText != null) childAgeDisplayText.text = retrievedAge;
+
+        // 2. HIGHEST LEVELS (Still displays correctly on the text!)
         int spellingLevel = PlayerPrefs.GetInt("SpellingLevelReached", 1);
         int readingLevel = PlayerPrefs.GetInt("ReadingLevelReached", 1);
 
-        // 3. Calculate completed levels based on that memory
-        int spellingCompleted = spellingLevel - 1;
-        int readingCompleted = readingLevel - 1;
+        if (SpellingLevelText != null) SpellingLevelText.text = "Highest Level: " + spellingLevel;
+        if (ReadingLevelText != null) ReadingLevelText.text = "Highest Level: " + readingLevel;
 
-        // Clamp values safely between 0 and totalLevelsInGame
-        spellingCompleted = Mathf.Clamp(spellingCompleted, 0, totalLevelsInGame);
-        readingCompleted = Mathf.Clamp(readingCompleted, 0, totalLevelsInGame);
+        // 3. THE NEW ACCURACY MATH!
+        int spellingCorrect = PlayerPrefs.GetInt("TotalSpellingCorrect", 0);
+        int spellingMistakes = PlayerPrefs.GetInt("TotalSpellingMistakes", 0);
+        int totalSpellingAttempts = spellingCorrect + spellingMistakes;
+        float spellingAccuracy = 0f; // Defaults to 0% if they haven't played yet
+
+        if (totalSpellingAttempts > 0)
+        {
+            spellingAccuracy = (float)spellingCorrect / totalSpellingAttempts; 
+        }
+
+        int readingCorrect = PlayerPrefs.GetInt("TotalReadingCorrect", 0);
+        int readingMistakes = PlayerPrefs.GetInt("TotalReadingMistakes", 0);
+        int totalReadingAttempts = readingCorrect + readingMistakes;
+        float readingAccuracy = 0f; 
+
+        if (totalReadingAttempts > 0)
+        {
+            readingAccuracy = (float)readingCorrect / totalReadingAttempts;
+        }
 
         // 4. Update the Fill Sprites dynamically
-        if (SpellingProgressBarImage != null)
-        {
-            SpellingProgressBarImage.fillAmount = (float)spellingCompleted / totalLevelsInGame;
-        }
-        if (ReadingProgressBarImage != null)
-        {
-            ReadingProgressBarImage.fillAmount = (float)readingCompleted / totalLevelsInGame;
-        }
+        if (SpellingProgressBarImage != null) SpellingProgressBarImage.fillAmount = spellingAccuracy;
+        if (ReadingProgressBarImage != null) ReadingProgressBarImage.fillAmount = readingAccuracy;
 
-        // 5. Turn completed levels into clean percentages
-        float spellingPercent = ((float)spellingCompleted / totalLevelsInGame) * 100f;
-        float readingPercent = ((float)readingCompleted / totalLevelsInGame) * 100f;
-
+        // 5. Turn accuracy decimals into clean percentages
         if (SpellingPercentageText != null) 
         {
-            SpellingPercentageText.text = Mathf.RoundToInt(spellingPercent) + "%";
+            SpellingPercentageText.text = Mathf.RoundToInt(spellingAccuracy * 100f) + "%";
         }
         if (ReadingPercentageText != null) 
         {
-            ReadingPercentageText.text = Mathf.RoundToInt(readingPercent) + "%";
+            ReadingPercentageText.text = Mathf.RoundToInt(readingAccuracy * 100f) + "%";
         }
-
-        // 6. Link it directly to the text displays! (TYPO FIXED HERE)
-        if (SpellingLevelText != null)
-        {
-            SpellingLevelText.text = "Highest Level: " + spellingLevel;
-        }
-        if (ReadingLevelText != null)
-        {
-            ReadingLevelText.text = "Highest Level: " + readingLevel;
-        }
-
-        Debug.Log($"[PROFILE TEST] Unity thinks the spelling level is: {spellingLevel} and reading level is: {readingLevel}");
     }
 
     public void ClickBackButton()
