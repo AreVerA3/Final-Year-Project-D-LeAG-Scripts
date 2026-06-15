@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6604656f0e96fc845bc3da4c0bb0f53f, type: 3}
+  m_Name: Level 1
+  m_EditorClassIdentifier: Assembly-CSharp::WordData
+  words:
+  - fullWord: CAT
+    displayWord: C _ T
+    correctLetter: A
+    wordPicture: {fileID: -7232521027535748977, guid: 9ff8abb969562b94e8b1093c3f531f62, type: 3}
+    wordAudio: {fileID: 8300000, guid: 61e9049086abd4f48b8b9517098d4e08, type: 3}
+  - fullWord: HAT
+    displayWord: H_T
+    correctLetter: A
+    wordPicture: {fileID: 21300000, guid: 51cfdb3189d24c343ae9d34dd5d4e1de, type: 3}
+    wordAudio: {fileID: 8300000, guid: 157e7d509a8f05440abcc621582840d6, type: 3}
+  - fullWord: PIG
+    displayWord: P _ G
+    correctLetter: I
+    wordPicture: {fileID: 21300000, guid: baedf0678bde7104db0164c68cc502c3, type: 3}
+    wordAudio: {fileID: 8300000, guid: c43c037312f5c4144bf4b0d934d4a84c, type: 3}
+  - fullWord: DIG
+    displayWord: D _ G
+    correctLetter: I
+    wordPicture: {fileID: 21300000, guid: 942cbf6538ce7c04a9573d8e3ff969d6, type: 3}
+    wordAudio: {fileID: 8300000, guid: 440c8d53ca35f054c9c7200ccc1efaaa, type: 3}
+  - fullWord: SUN
+    displayWord: S _ N
+    correctLetter: U
+    wordPicture: {fileID: 21300000, guid: b183efb0004bf534baac60c95eaa013f, type: 3}
+    wordAudio: {fileID: 8300000, guid: 053bffe62952bf4479996deb9d9d0f26, type: 3}
+  - fullWord: RUN
+    displayWord: R _ N
+    correctLetter: U
+    wordPicture: {fileID: 21300000, guid: 956c072a9d78a6d4c92ad3c4c05027be, type: 3}
+    wordAudio: {fileID: 8300000, guid: 709d6fb7e24b2954da7f664c023215a3, type: 3}
+  - fullWord: BUG
+    displayWord: B _ G
+    correctLetter: U
+    wordPicture: {fileID: 21300000, guid: 210cef819964939418bb07ccae92792d, type: 3}
+    wordAudio: {fileID: 8300000, guid: abdcc94d8bedff54db01f498ecfb6341, type: 3}
+  - fullWord: SIT
+    displayWord: S _ T
+    correctLetter: I
+    wordPicture: {fileID: 21300000, guid: ed6ce35bcbbe3114a8bf3aa249b73f8a, type: 3}
+    wordAudio: {fileID: 8300000, guid: 92a6f976581ac244580d1a074ddeb33b, type: 3}
+  - fullWord: BAT
+    displayWord: B _ T
+    correctLetter: A
+    wordPicture: {fileID: 21300000, guid: f1b6356a7455d654e9998f92c00bedc3, type: 3}
+    wordAudio: {fileID: 8300000, guid: 6dfe9a38182a92d48b9cf7fc6fcbebed, type: 3}
+  - fullWord: BIG
+    displayWord: B _ G
+    correctLetter: I
+    wordPicture: {fileID: 21300000, guid: f52fc53b6c3d13945ad6caf29398c3d4, type: 3}
+    wordAudio: {fileID: 8300000, guid: 9bf56e1677b8fec4e8a6b385fda82f73, type: 3}
+  - fullWord: FIN
+    displayWord: F _ N
+    correctLetter: I
+    wordPicture: {fileID: 21300000, guid: 0c02c7333e67c964d892df391f2bd27d, type: 3}
+    wordAudio: {fileID: 8300000, guid: 3ac7c1700dbd28d41a03931f925be60d, type: 3}
+  - fullWord: MAP
+    displayWord: M _ P
+    correctLetter: A
+    wordPicture: {fileID: 21300000, guid: 32b843e9bc626f04f88062300e27df3b, type: 3}
+    wordAudio: {fileID: 8300000, guid: ba8ee2cd6a304614e913421a35495222, type: 3}
+  - fullWord: GAP
+    displayWord: G _ P
+    correctLetter: A
+    wordPicture: {fileID: 21300000, guid: 45d3dff100679d74bb893c664fecf425, type: 3}
+    wordAudio: {fileID: 8300000, guid: b04b3b07f59f23d448ab5c14ff311de9, type: 3}
+  - fullWord: BUS
+    displayWord: B _ S
+    correctLetter: U
+    wordPicture: {fileID: 21300000, guid: 63e7071708a32654a8d000b8a06e9efd, type: 3}
+    wordAudio: {fileID: 8300000, guid: 40bd895241fac36449616eadfaeea52d, type: 3}
+  - fullWord: JAM
+    displayWord: J _ M
+    correctLetter: A
+    wordPicture: {fileID: 21300000, guid: 17ffb16f5f7944f47b60605fc1e14540, type: 3}
+    wordAudio: {fileID: 8300000, guid: 23b8f15ca1d75b6499ac2c5ee39ed786, type: 3}
+  - fullWord: CUP
+    displayWord: C _ P
+    correctLetter: U
+    wordPicture: {fileID: 21300000, guid: acd467b3f8e51ba4ba3bf31bfca03a79, type: 3}
+    wordAudio: {fileID: 8300000, guid: f0104d10fba05a64cbd82d6241f5b22e, type: 3}

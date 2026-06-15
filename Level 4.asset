@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6604656f0e96fc845bc3da4c0bb0f53f, type: 3}
+  m_Name: Level 4
+  m_EditorClassIdentifier: Assembly-CSharp::WordData
+  words:
+  - fullWord: HAND
+    displayWord: H A _ D
+    correctLetter: N
+    wordPicture: {fileID: 21300000, guid: 4d6f9a6711f3edc49ad48ca3587560cb, type: 3}
+    wordAudio: {fileID: 8300000, guid: 2804e58fae4eac94faf482cd2f38f8ff, type: 3}
+  - fullWord: BAND
+    displayWord: 'B A N _ '
+    correctLetter: D
+    wordPicture: {fileID: 21300000, guid: dc605e82b5f8cb9488e732999fa0bf79, type: 3}
+    wordAudio: {fileID: 8300000, guid: 0ea17231b3ac2404c962a9bd3c161df3, type: 3}
+  - fullWord: DESK
+    displayWord: 'D E S _ '
+    correctLetter: K
+    wordPicture: {fileID: 21300000, guid: 355bd16a8e9bc60428d69a3ae0d95799, type: 3}
+    wordAudio: {fileID: 8300000, guid: 65c5b6e55e51d2c4c97107759efada8c, type: 3}
+  - fullWord: MASK
+    displayWord: 'M A S _ '
+    correctLetter: K
+    wordPicture: {fileID: 21300000, guid: e9d8fbd38bdd4f94b8248d926756e8c4, type: 3}
+    wordAudio: {fileID: 8300000, guid: 9c9e729d0699dfb49bd9eda1f576a53c, type: 3}
+  - fullWord: TENT
+    displayWord: T E _ T
+    correctLetter: N
+    wordPicture: {fileID: 21300000, guid: 9a8f1ada345f9ce488dd7c9f6e0c3bab, type: 3}
+    wordAudio: {fileID: 8300000, guid: 34e70264db6d1ef4cb53fb47403618be, type: 3}
+  - fullWord: MEAT
+    displayWord: 'M E A _ '
+    correctLetter: T
+    wordPicture: {fileID: 21300000, guid: 707135ce51aefc04993929823d1a11ae, type: 3}
+    wordAudio: {fileID: 8300000, guid: 152ad86e0ca3d6f4398623e1a4b3ab2e, type: 3}
+  - fullWord: MILK
+    displayWord: M I _ K
+    correctLetter: L
+    wordPicture: {fileID: 21300000, guid: 71cef3b16aeb92e4cbea29d14a63f716, type: 3}
+    wordAudio: {fileID: 8300000, guid: d18e96f57a4ec654893158abd27cf2c2, type: 3}
+  - fullWord: LAMP
+    displayWord: L A _ P
+    correctLetter: M
+    wordPicture: {fileID: 21300000, guid: d728c0683cbf8774f8c49f363a2d2076, type: 3}
+    wordAudio: {fileID: 8300000, guid: 5aaf8bb1943dc25438fac9468913f88f, type: 3}
+  - fullWord: JUMP
+    displayWord: J U _ P
+    correctLetter: M
+    wordPicture: {fileID: 21300000, guid: 2bd476d04e25d63438b71c147ceb5ffb, type: 3}
+    wordAudio: {fileID: 8300000, guid: 5b336a0cd46fcea46b19d3908d3b279a, type: 3}
+  - fullWord: BOAT
+    displayWord: B _ A T
+    correctLetter: O
+    wordPicture: {fileID: 21300000, guid: 7ff5bd2e044d12243a277e3f6b653598, type: 3}
+    wordAudio: {fileID: 8300000, guid: 4edfc06814ca21449a2e6df5d1dcf0e2, type: 3}
+  - fullWord: BIKE
+    displayWord: B I _ E
+    correctLetter: K
+    wordPicture: {fileID: 21300000, guid: 3a0f7f5a2046f2f49acee52b0829d72f, type: 3}
+    wordAudio: {fileID: 8300000, guid: 133d2300957cd724d99dbb850ead1dd2, type: 3}
